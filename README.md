@@ -83,9 +83,9 @@ src/
 | Name | Role |
 |------|------|
 | **Sara Aljuraybah** | Lead Developer, GUI Designer |
-| **Reem AlKhaldi** | Client Logic Implementation |
-| **Aisha AlSaud** | Server & Thread Management |
-| **Dalal AlGhamdi** | GUI & Testing |
+| **Dana Alosaimy** | Client Logic Implementation |
+| **Haya Alomar** | Server & Thread Management |
+| **Gharsah Almosaad** | GUI & Testing |
 
 ---
 
