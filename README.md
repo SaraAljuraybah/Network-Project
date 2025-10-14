@@ -46,8 +46,7 @@ src/
 
 | Category | Technology |
 |-----------|-------------|
-|Programming|             |
-| Language  |    Java     |
+|Programming Language  |    Java     |
 | IDE       |   NetBeans  |
 | GUI Framework | Java Swing |
 | Network API | java.net.Socket, java.net.ServerSocket |
