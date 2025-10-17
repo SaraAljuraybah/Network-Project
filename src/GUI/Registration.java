@@ -95,10 +95,17 @@ public class Registration extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-JOptionPane.showMessageDialog(this,
-    "You are connected and registered successfully",
-    "Registration",
-    JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(this,
+            "You are connected and registered successfully",
+            "Registration",
+            JOptionPane.INFORMATION_MESSAGE);
+
+    MakeNewReservation makeNewResFrame = new MakeNewReservation();
+    makeNewResFrame.setVisible(true);
+
+    // نغلق نافذة التسجيل الحالية
+    this.dispose();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
