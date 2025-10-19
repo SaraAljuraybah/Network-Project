@@ -1,5 +1,8 @@
-
-package com.mycompany.newserver;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.phase1;
 
 /**
  *
@@ -18,11 +21,12 @@ private Socket client;
 private BufferedReader in;
 private PrintWriter out;
 private ArrayList<NewClient> clients;
-
-  public NewClient (Socket c,ArrayList<NewClient> clients) throws IOException
+private ArrayList<Reservation> reservations; ///////
+  public NewClient (Socket c,ArrayList<NewClient> clients, ArrayList<Reservation> reservations) throws IOException/////
   {
     this.client = c;
     this.clients=clients;
+    this.reservations=reservations;/////
     in= new BufferedReader (new InputStreamReader(client.getInputStream())); 
     out=new PrintWriter(client.getOutputStream(),true); 
   }
@@ -32,8 +36,16 @@ private ArrayList<NewClient> clients;
   {
    try{
     while (true){
-        String request=in.readLine();  
-                outToAll(request);
+        String name=in.readLine();
+        //System.out.println("name "+name);
+        String pass=in.readLine();
+        //System.out.println("pass "+ pass);
+        //String resturant=in.readLine();
+        
+       Reservation R = new Reservation(name, pass,"monday", "kapsa","2");
+        R.Print();
+        reservations.add(R);
+         //outToAll(request);
    
     }
 }
@@ -56,4 +68,3 @@ for (NewClient aclient:clients){
 }
     }
 }
-
