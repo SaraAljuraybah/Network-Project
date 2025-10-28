@@ -38,49 +38,8 @@ public class Resturant {
 
 
  
-   //  حجز طاولة في يوم ووقت معين
-    public boolean reserveTable(String tableNumber, String day, String time) {
-        for (int i = 0; i < tables.size(); i++) {
-            table current = tables.get(i);
-            if (current.tableNum.equals(tableNumber)
-                    && current.day.equalsIgnoreCase(day)
-                    && current.time.equals(time)) {
 
-                if (!current.reserved) {
-                    current.reserve();
-                    System.out.println("Table " + tableNumber + " in " + name
-                            + " reserved on " + day + " at " + time);
-                    return true;
-                } else {
-                    System.out.println(" Table " + tableNumber + " is already reserved at " + time + " on " + day);
-                    return false;
-                }
-            }
-        }
-        System.out.println("️ Table not found!");
-        return false;
-    }
 
-    // عرض الفترات المتاحة لطاولة معينة في يوم محدد
-    public void showAvailableTimes(String tableNumber, String day) {
-        System.out.println(" Available times for table " + tableNumber
-                + " in " + name + " on " + day + ":");
-        boolean found = false;
-
-        for (int i = 0; i < tables.size(); i++) {
-            table current = tables.get(i);
-            if (current.tableNum.equals(tableNumber)
-                    && current.day.equalsIgnoreCase(day)
-                    && !current.reserved) {
-                System.out.println(" - " + current.time);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println(" No available times for this day.");
-        }
-    }
  
  
  
@@ -100,3 +59,4 @@ public class Resturant {
  
  
 }//class
+
