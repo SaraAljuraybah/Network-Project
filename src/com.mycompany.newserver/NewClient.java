@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.mavenproject2;
+package com.mycompany.newserver;
 
 /**
  *
@@ -40,66 +40,60 @@ private Resturant[] allResturants;
 @Override
   public void run ()
   {
-   try{
-       
-       
-               String name=in.readLine();
-        //System.out.println("name "+name);
-        String pass=in.readLine();
-        //System.out.println("pass "+ pass);
-        //String resturant=in.readLine();
-        
-       Reservation R = new Reservation(name, pass,"-", "-","-");
-        R.Print();
-        reservations.add(R);
-         //outToAll(request);
-         
-    while (true){
+      
 
-   
-         
-         
-       String msg = in.readLine();
-                if (msg == null) break;
 
-              
-                String[] data = msg.split(" ");
-                String command = data[0];
+      
+      
+try {
+    while (true) {
+        String msg = in.readLine();
+        if (msg == null) break;
 
-                if (command.equalsIgnoreCase("RESERVE")) {
-                    String restaurantName = data[1];
-                    String tableNum = data[2];
-                    String day = data[3];
-                    String time = data[4];
-                    handleReserve(restaurantName, tableNum, day, time);
-                } 
-                else if (command.equalsIgnoreCase("SHOW")) {
-                    String restaurantName = data[1];
-                    String tableNum = data[2];
-                    String day = data[3];
-                    handleShow(restaurantName, tableNum, day);
-                }
-         
+msg = msg.replaceAll("[\\r\\n]+", "").trim();
+String[] data = msg.split(" ");
+System.out.println("Received command: [" + msg + "] Parts: " + data.length);
+        String command = data[0];
+
+if (command.equalsIgnoreCase("RESERVE")) {
+    if (data.length < 5) {  // RESERVE تحتاج 5 عناصر
+        out.println("Invalid reservation command. Usage: RESERVE <restaurant> <table> <day> <time>");
+        continue;
     }
-}catch (IOException e){
-       System.err.println("IO exception in new client class");
-       System.err.println(e.getStackTrace());
-   }
-finally{
-    out.close();
-       try {
-           in.close();
-       } catch (IOException ex) {
-          ex.printStackTrace();
-       }
-}
-  }
-    private void outToAll(String substring) {
-for (NewClient aclient:clients){
-   aclient.out.println(substring); 
-}
+
+    String restaurantName = data[1];
+    String tableNum = data[2];
+    String day = data[3];
+    String time = data[4];
+    handleReserve(restaurantName, tableNum, day, time);
+
+} else if (command.equalsIgnoreCase("SHOW")) {
+    if (data.length < 4) {  // SHOW تحتاج 4 عناصر فقط
+        out.println("Invalid show command. Usage: SHOW <restaurant> <table> <day>");
+        out.println("END");
+        continue;
     }
-    
+
+    String restaurantName = data[1];
+    String tableNum = data[2];
+    String day = data[3];
+    handleShow(restaurantName, tableNum, day);
+
+} else {
+    out.println("Unknown command: " + command);
+}
+
+    }
+} catch (IOException e) {
+    System.err.println("IO exception in new client class");
+    e.printStackTrace();
+}
+  }//RUN
+  
+  
+  
+
+
     
     
     
@@ -145,24 +139,9 @@ for (NewClient aclient:clients){
             }
         }
         out.println("END");
-    }
+    }}
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}// end of New client
+   
