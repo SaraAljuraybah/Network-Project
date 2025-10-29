@@ -3,55 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import javax.swing.JOptionPane;
+import com.mycompany.newserver.Client;
 
-
-/**
- *
- * @author haya9
- */
 public class MakeNewReservation extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MakeNewReservation.class.getName());
 
-    /**
-     * Creates new form MakeNewReservation
-     */
-    Socket socket;  // -
-PrintWriter out;  // -
-BufferedReader in; 
+    private static final java.util.logging.Logger logger =
+        java.util.logging.Logger.getLogger(MakeNewReservation.class.getName());
+
+    private Client client;   // ✅ بدل socket/out/in
 
     public MakeNewReservation() {
         initComponents();
-               connectToServer(); //  الاتصال بالسيرفر أول ما يفتح الفريم
-        fillComboBoxes();  //  fill in the lists 
+        client = new Client();   // ✅ اتصلي بالسيرفر هنا
+        fillComboBoxes();
     }
 
+
     
-    //  الاتصال بالسيرفر
-private void connectToServer() {
-    try {
-        socket = new Socket("localhost", 9090);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        System.out.println(" Connected to server");
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, " Could not connect to server!");
-    }
-}
     
     
  // fill in the lists
+    private void fillComboBoxes() {
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"R1", "R2", "R3"})); // المطاعم
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
+            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})); // الأيام
+    }
+    /*
 private void fillComboBoxes() {
     jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"R1", "R2", "R3"})); // restaurants
     jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})); // days
-}
+}*/
     
     
     
@@ -191,7 +174,29 @@ private void fillComboBoxes() {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 // show available times button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-   String restaurant = jComboBox1.getSelectedItem().toString();
+       String restaurant = jComboBox1.getSelectedItem().toString();
+    String day        = jComboBox2.getSelectedItem().toString();
+    String tableNum   = "1";
+
+    client.sendMessage("SHOW " + restaurant + " " + tableNum + " " + day);
+
+    new Thread(() -> {
+        java.util.List<String> freeTimes = client.readUntilEnd();
+        SwingUtilities.invokeLater(() -> {
+            if (freeTimes.isEmpty()) {
+                jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"No available times"}));
+            } else {
+                jComboBox3.setModel(
+                    new javax.swing.DefaultComboBoxModel<>(freeTimes.toArray(new String[0]))
+                );
+            }
+        });
+    }).start();
+                                       
+
+        
+        /*
+        String restaurant = jComboBox1.getSelectedItem().toString();
     String day = jComboBox2.getSelectedItem().toString();
     String tableNum = "1"; // مبدئيًا نفترض دايم الطاولة رقم 1
 
@@ -214,6 +219,7 @@ private void fillComboBoxes() {
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error loading times from server.");
     }
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
@@ -222,6 +228,34 @@ private void fillComboBoxes() {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     String restaurant = jComboBox1.getSelectedItem().toString();
+    String day        = jComboBox2.getSelectedItem().toString();
+    String time       = jComboBox3.getSelectedItem().toString();
+    String tableNum   = "1";
+
+    System.out.println("Sending: RESERVE " + restaurant + " " + tableNum + " " + day + " " + time);
+    if ("No available times".equals(time)) {
+        JOptionPane.showMessageDialog(this, "Please choose a valid time.");
+        return;
+    }
+
+    client.sendMessage("RESERVE " + restaurant +  " " +tableNum + " "+ day + " " + time);
+
+    new Thread(() -> {
+        String response = client.readMessage(); 
+        SwingUtilities.invokeLater(() -> {
+            if (response != null) {
+                JOptionPane.showMessageDialog(this, response, "Reservation", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Reservation completed!");
+            }
+            MainMenu menu = new MainMenu();
+            menu.setVisible(true);
+            this.dispose();
+        });
+    }).start();
+
+/*
+String restaurant = jComboBox1.getSelectedItem().toString();
     String day = jComboBox2.getSelectedItem().toString();
     String time = jComboBox3.getSelectedItem().toString();
     String tableNum = "1"; // مؤقت
@@ -249,6 +283,7 @@ private void fillComboBoxes() {
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error while booking reservation.");
     }
+*/
     }//GEN-LAST:event_jButton4ActionPerformed
 // cofirm buton
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
