@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.newserver;
+package com.mycompany.phase1;
 
 /**
  *
@@ -79,7 +79,22 @@ if (command.equalsIgnoreCase("RESERVE")) {
     String day = data[3];
     handleShow(restaurantName, tableNum, day);
 
-} else {
+} 
+/////////////////************************************************
+ else if (command.equalsIgnoreCase("SHOW_TABLES")) {   // ← ADD THIS BLOCK
+    if (data.length < 4) {
+        out.println("Invalid show tables command. Usage: SHOW_TABLES <restaurant> <day> <time>");
+        out.println("END");
+        continue;
+    }
+    String restaurantName = data[1];
+    String day = data[2];
+    String time = data[3];
+    handleShowTables(restaurantName, day, time);
+}
+/////////////////////******************
+
+else {
     out.println("Unknown command: " + command);
 }
 
@@ -90,13 +105,6 @@ if (command.equalsIgnoreCase("RESERVE")) {
 }
   }//RUN
   
-  
-  
-
-
-    
-    
-    
     
     
     private void handleReserve(String restaurantName, String tableNum, String day, String time) {
@@ -139,7 +147,28 @@ if (command.equalsIgnoreCase("RESERVE")) {
             }
         }
         out.println("END");
-    }}
+    }
+
+///*******************************************
+private void handleShowTables(String restaurantName, String day, String time) {
+    // Get all available tables for specific time slot
+    for (int i = 0; i < allResturants.length; i++) {
+        Resturant r = allResturants[i];
+        if (r.name.equalsIgnoreCase(restaurantName)) {
+            for (int j = 0; j < r.tables.size(); j++) {
+                table t = r.tables.get(j);
+                if (t.day.equalsIgnoreCase(day) && t.time.equals(time) && !t.reserved) {
+                    out.println(t.tableNum);  // Only send available tables
+                }
+            }
+        }
+    }
+    out.println("END");
+}
+
+////*************************************
+
+}
     
     
     
