@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package com.mycompany.phase1;
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
-import com.mycompany.newserver.Client;
+import com.mycompany.phase1.Client;
 
 public class MakeNewReservation extends javax.swing.JFrame {
 
@@ -18,11 +18,14 @@ public class MakeNewReservation extends javax.swing.JFrame {
         initComponents();
         client = new Client();   // ✅ اتصلي بالسيرفر هنا
         fillComboBoxes();
+   // ✅ CORRECT: Traditional ActionListener only
+    jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            timeSelectedActionPerformed(evt);
+        }
+    });
+    
     }
-
-
-    
-    
     
  // fill in the lists
     private void fillComboBoxes() {
@@ -57,7 +60,8 @@ private void fillComboBoxes() {
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Make new reservation");
@@ -103,12 +107,9 @@ private void fillComboBoxes() {
             }
         });
 
-        jButton5.setText("Confirm");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        jLabel3.setText("Table number");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,24 +120,25 @@ private void fillComboBoxes() {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(69, 69, 69)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(48, 48, 48)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(74, 74, 74)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGap(63, 109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,9 +146,7 @@ private void fillComboBoxes() {
                 .addGap(53, 53, 53)
                 .addComponent(jLabel2)
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -154,10 +154,14 @@ private void fillComboBoxes() {
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addGap(13, 13, 13)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(26, 26, 26))
         );
@@ -193,7 +197,7 @@ private void fillComboBoxes() {
         });
     }).start();
                                        
-
+  
         
         /*
         String restaurant = jComboBox1.getSelectedItem().toString();
@@ -221,7 +225,42 @@ private void fillComboBoxes() {
     }
         */
     }//GEN-LAST:event_jButton3ActionPerformed
+// button show avilable code ends 
+    
+  //***********************************************
+     // Add this RIGHT AFTER your jButton3ActionPerformed method ends
+private void timeSelectedActionPerformed(java.awt.event.ActionEvent evt) {
+    String restaurant = jComboBox1.getSelectedItem().toString();
+    String day = jComboBox2.getSelectedItem().toString();
+    String time = jComboBox3.getSelectedItem().toString();
+    
+    if ("No available times".equals(time)) {
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"No tables"}));
+        return;
+    }
+    
+    // Get available tables for this specific time
+    client.sendMessage("SHOW_TABLES " + restaurant + " " + day + " " + time);
 
+    new Thread(new Runnable() {
+        public void run() {
+            final java.util.List<String> availableTables = client.readUntilEnd();
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    if (availableTables.isEmpty()) {
+                        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"No tables available"}));
+                    } else {
+                        String[] tablesArray = availableTables.toArray(new String[availableTables.size()]);
+                        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(tablesArray));
+                    }
+                }
+            });
+        }
+    }).start();
+}
+    
+    //****************************************
+    
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3ActionPerformed
@@ -230,7 +269,12 @@ private void fillComboBoxes() {
     String restaurant = jComboBox1.getSelectedItem().toString();
     String day        = jComboBox2.getSelectedItem().toString();
     String time       = jComboBox3.getSelectedItem().toString();
-    String tableNum   = "1";
+    String tableNum   = jComboBox4.getSelectedItem().toString(); /////**************************
+    if ("No tables available".equals(tableNum) || "No tables".equals(tableNum)) {
+    JOptionPane.showMessageDialog(this, "Please choose a valid table.");
+    return;
+}
+    ////************************
 
     System.out.println("Sending: RESERVE " + restaurant + " " + tableNum + " " + day + " " + time);
     if ("No available times".equals(time)) {
@@ -286,10 +330,6 @@ String restaurant = jComboBox1.getSelectedItem().toString();
 */
     }//GEN-LAST:event_jButton4ActionPerformed
 // cofirm buton
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -315,15 +355,20 @@ String restaurant = jComboBox1.getSelectedItem().toString();
         java.awt.EventQueue.invokeLater(() -> new MakeNewReservation().setVisible(true));
     }
 
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
