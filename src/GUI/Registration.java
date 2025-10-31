@@ -1,21 +1,21 @@
-
-package com.mycompany.phase1;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package GUI;
 import javax.swing.JOptionPane;
 
-
+/**
+ *
+ * @author Sss43
+ */
 public class Registration extends javax.swing.JFrame {
 
     /**
      * Creates new form Registration
-     *
+     */
     public Registration() {
         initComponents();
-       
-    }*/
-    public Registration(Client c) {
-             initComponents();
-         client = c;
     }
 
     /**
@@ -95,13 +95,7 @@ public class Registration extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         pass = new String(jPasswordField1.getPassword());
-         
-         name=jTextField1.getText();
-        
-        client.register(name, pass);
-       
-        JOptionPane.showMessageDialog(this,
+    JOptionPane.showMessageDialog(this,
             "You are connected and registered successfully",
             "Registration",
             JOptionPane.INFORMATION_MESSAGE);
@@ -117,22 +111,37 @@ public class Registration extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-     
-    /**public static void main(String args[]) {**/
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-      
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
         /* Create and display the form */
-        /**java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new Registration().setVisible(true);
+                new Registration().setVisible(true);
             }
         });
-    }**/
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -140,7 +149,5 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
-    String name, pass;
-    private Client client;
     // End of variables declaration//GEN-END:variables
 }

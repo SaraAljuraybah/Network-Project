@@ -1,16 +1,21 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package GUI;
+import GUI.Registration;
 
-package com.mycompany.phase1;
-import com.mycompany.phase1.Registration;
-
-
+/**
+ *
+ * @author Sss43
+ */
 public class MainMenu extends javax.swing.JFrame {
-private Client client;
+
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         initComponents();
-       client = new Client();
     }
 
     /**
@@ -87,7 +92,7 @@ this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-Registration reg = new Registration(client);
+Registration reg = new Registration(); 
 reg.setVisible(true); 
 this.dispose();      // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -118,7 +123,7 @@ this.dispose();      // TODO add your handling code here:
             java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-           
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
