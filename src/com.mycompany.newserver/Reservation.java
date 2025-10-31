@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.phase1;
+package com.mycompany.newserver;
 
 /**
  *
@@ -13,7 +13,7 @@ public class Reservation {
   String Password;
   String day;
   String ResturnatName;
- // String tableNo;
+  String tableNo;
   String time;
     
     
@@ -21,25 +21,19 @@ public class Reservation {
     public Reservation(String Username , String pass , String Day ,  String rest,String time){
     this.Username = Username;
     Password = pass;
-   // ResturnatName =rest;
+   ResturnatName =rest;
     day = Day;
    this.time= time;
-  //  this.tableNo=tableNo;
+   this.tableNo=tableNo;
     
     }
     
-    
+   
  public void Print  (){
-     System.out.println("Regestration info"+ Username + " " +Password + " " + day);
- } 
-    
-    
-    
-    
-    
-    
-    
-    
+     System.out.println("Regestration info " + Username + " " +Password + " " + day);
 
-    
+     
+ } 
+   
+   
 }// end of reservation class
