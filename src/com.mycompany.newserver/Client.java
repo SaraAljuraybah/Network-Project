@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-    private static final String Server_IP = "10.6.197.159";
+    private static final String Server_IP = "localhost";
     private static final int Server_port = 9090;
 
     private BufferedReader in;
