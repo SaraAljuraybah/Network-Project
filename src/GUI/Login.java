@@ -101,12 +101,6 @@ JOptionPane.showMessageDialog(this,
     "You are connected and logged in successfully",
     "Login",
     JOptionPane.INFORMATION_MESSAGE);
-// بعد ما يضغط المستخدم OK نفتح واجهة الحساب
-Myaccount myAccFrame = new Myaccount();
-myAccFrame.setVisible(true);
-
-// نغلق صفحة تسجيل الدخول الحالية
-this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
