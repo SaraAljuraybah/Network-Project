@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.newserver;
+package com.mycompany.phase1;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Reservation {
     
     
     //counstructor
-    public Reservation(String Username , String pass , String Day ,  String rest,String time){
+    public Reservation(String Username , String pass , String Day ,  String rest,String time, String tableNo ){
     this.Username = Username;
     Password = pass;
    ResturnatName =rest;
