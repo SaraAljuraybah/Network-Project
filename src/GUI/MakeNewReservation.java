@@ -12,13 +12,15 @@ public class MakeNewReservation extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger =
         java.util.logging.Logger.getLogger(MakeNewReservation.class.getName());
 
-    private Client client;   // ✅ بدل socket/out/in
+    private Client client;   
+   // private String username; //@@@@@@@@@@@@@@@
 
     public MakeNewReservation() {
         initComponents();
-        client = new Client();   // ✅ اتصلي بالسيرفر هنا
+        client = new Client();
+       // this.username=username;
         fillComboBoxes();
-   // ✅ CORRECT: Traditional ActionListener only
+   
     jComboBox3.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             timeSelectedActionPerformed(evt);
@@ -180,9 +182,10 @@ private void fillComboBoxes() {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        String restaurant = jComboBox1.getSelectedItem().toString();
     String day        = jComboBox2.getSelectedItem().toString();
-    String tableNum   = "1";
-
-    client.sendMessage("SHOW " + restaurant + " " + tableNum + " " + day);
+    String tableNum   = jComboBox4.getSelectedItem().toString();
+ // client.sendMessage("SHOW " + restaurant + " " + tableNum + " " + day);************
+  
+    client.sendMessage("SHOW " + restaurant + " "+tableNum+ " " + day);
 
     new Thread(() -> {
         java.util.List<String> freeTimes = client.readUntilEnd();
@@ -228,7 +231,7 @@ private void fillComboBoxes() {
 // button show avilable code ends 
     
   //***********************************************
-     // Add this RIGHT AFTER your jButton3ActionPerformed method ends
+     
 private void timeSelectedActionPerformed(java.awt.event.ActionEvent evt) {
     String restaurant = jComboBox1.getSelectedItem().toString();
     String day = jComboBox2.getSelectedItem().toString();
