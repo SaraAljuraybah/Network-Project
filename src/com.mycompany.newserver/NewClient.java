@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.phase1;
+package com.mycompany.mavenproject3;
 
 /**
  *
@@ -57,16 +57,18 @@ System.out.println("Received command: [" + msg + "] Parts: " + data.length);
         String command = data[0];
 
 if (command.equalsIgnoreCase("RESERVE")) {
-    if (data.length < 5) {  // RESERVE 
-        out.println("Invalid reservation command. Usage: RESERVE <restaurant> <table> <day> <time>");
+    if (data.length < 6) {  // RESERVE 
+        out.println("Invalid reservation command. Usage: RESERVE <username> <restaurant> <table> <day> <time>");
         continue;
     }
 
-    String restaurantName = data[1];
-    String tableNum = data[2];
-    String day = data[3];
-    String time = data[4];
-    handleReserve(restaurantName, tableNum, day, time);
+    String username = data[1];
+    String restaurantName = data[2];
+    String tableNum = data[3];
+    String day = data[4];
+    String time = data[5];
+    
+    handleReserve(username, restaurantName, tableNum, day, time);
 
 } else if (command.equalsIgnoreCase("SHOW")) {
     if (data.length < 4) {  // SHOW 
@@ -141,37 +143,34 @@ else {
   
     
     
-    private void handleReserve(String restaurantName, String tableNum, String day, String time) {
-        //$$$$$$$$$$$$4
-       String reservationUsername=(currentUsername!=null)? currentUsername:"testUser";
+private void handleReserve(String username, String restaurantName, String tableNum, String day, String time) {
+    // Remove the currentUsername logic, use the passed username directly
+    for (int i = 0; i < allResturants.length; i++) {
+        Resturant r = allResturants[i];
+        if (r.name.equalsIgnoreCase(restaurantName)) {
+            for (int j = 0; j < r.tables.size(); j++) {
+                table t = r.tables.get(j);
+                if (t.tableNum.equals(tableNum)
+                        && t.day.equalsIgnoreCase(day)
+                        && t.time.equals(time)) {
 
-        for (int i = 0; i < allResturants.length; i++) {
-            Resturant r = allResturants[i];
-            if (r.name.equalsIgnoreCase(restaurantName)) {
-                for (int j = 0; j < r.tables.size(); j++) {
-                    table t = r.tables.get(j);
-                    if (t.tableNum.equals(tableNum)
-                            && t.day.equalsIgnoreCase(day)
-                            && t.time.equals(time)) {
-
-                        if (!t.reserved) {
-                            t.reserved = true;
-                            //$$$$$$$$$4
-                            Reservation newResrvation= new Reservation (reservationUsername,"",day,restaurantName,time,tableNum);
-                            reservations.add(newResrvation);
-                            System.out.println("Reservation is stored for : "+ reservationUsername);
-                            out.println("Reservation confirmed for " + day + " at " + time);
-                            return;
-                        } else {
-                            out.println("Table already reserved.");
-                            return;
-                        }
+                    if (!t.reserved) {
+                        t.reserved = true;
+                        Reservation newReservation = new Reservation(username, "", day, restaurantName, time, tableNum);
+                        reservations.add(newReservation);
+                        System.out.println("Reservation stored for: " + username);
+                        out.println("Reservation confirmed for " + day + " at " + time);
+                        return;
+                    } else {
+                        out.println("Table already reserved.");
+                        return;
                     }
                 }
             }
         }
-        out.println("Reservation failed.");
     }
+    out.println("Reservation failed.");
+}
 
     private void handleShow(String restaurantName, String tableNum, String day) {
         for (int i = 0; i < allResturants.length; i++) {
@@ -254,11 +253,7 @@ private void handleRegister(String username, String password) {
         out.println("END");   
     }
 
-}   
-          
-          
-          
-       
+}  
     
     
     
