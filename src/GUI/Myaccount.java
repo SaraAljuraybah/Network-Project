@@ -3,19 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import com.mycompany.mavenproject3.Client;
+
 
 /**
  *
  * @author haya9
  */
 public class Myaccount extends javax.swing.JFrame {
-    
+   
+  //$$$$$$$$$$$
+    private String currentUsername;  
+     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Myaccount.class.getName());
 
     /**
      * Creates new form Myaccount
      */
-    public Myaccount() {
+    
+  
+ //$$$$$$$$$$$$$
+    public Myaccount(String username) {
+        initComponents();
+    this.currentUsername=username;
+    loadUserReservations();
+    }
+    public Myaccount(){
         initComponents();
     }
 
@@ -144,7 +157,7 @@ public class Myaccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-MakeNewReservation newRes = new MakeNewReservation();
+MakeNewReservation newRes = new MakeNewReservation(currentUsername);//pass the username
 newRes.setVisible(true);
 this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton2ActionPerformed
@@ -173,6 +186,34 @@ this.dispose();        // TODO add your handling code here:
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Myaccount().setVisible(true));
     }
+    //$$$$$$$$$$$$$$$$$
+    private void loadUserReservations() {
+    // Create a client to talk to server
+    Client client = new Client();
+    
+    // ✅ SEND COMMAND TO GET THIS USER'S RESERVATIONS
+    client.sendMessage("GET_MY_RESERVATIONS " + currentUsername);
+    
+    // Read the response
+    java.util.List<String> myReservations = client.readUntilEnd();
+    
+    // Display in the JList
+    if (myReservations.isEmpty() || myReservations.get(0).equals("No reservations found")) {
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "No reservations found" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+    } else {
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = myReservations.toArray(new String[0]);
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+    }
+    
+    client.close();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

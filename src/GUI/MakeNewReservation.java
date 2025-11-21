@@ -5,20 +5,23 @@
 package GUI;
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
-import com.mycompany.newserver.Client;
+import com.mycompany.mavenproject3.Client;
 
 public class MakeNewReservation extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger =
         java.util.logging.Logger.getLogger(MakeNewReservation.class.getName());
 
-    private Client client;   // ✅ بدل socket/out/in
+    private Client client;   
+  
+    private String username;
 
-    public MakeNewReservation() {
+    public MakeNewReservation(String username) {
         initComponents();
-        client = new Client();   // ✅ اتصلي بالسيرفر هنا
+        client = new Client();
+        this.username=username;
         fillComboBoxes();
-   // ✅ CORRECT: Traditional ActionListener only
+   
     jComboBox3.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             timeSelectedActionPerformed(evt);
@@ -181,8 +184,9 @@ private void fillComboBoxes() {
        String restaurant = jComboBox1.getSelectedItem().toString();
     String day        = jComboBox2.getSelectedItem().toString();
     String tableNum   = jComboBox4.getSelectedItem().toString();
-
-    client.sendMessage("SHOW " + restaurant + " " + tableNum + " " + day);
+ // client.sendMessage("SHOW " + restaurant + " " + tableNum + " " + day);************
+  
+    client.sendMessage("SHOW " + restaurant + " "+tableNum+ " " + day);
 
     new Thread(() -> {
         java.util.List<String> freeTimes = client.readUntilEnd();
@@ -228,7 +232,7 @@ private void fillComboBoxes() {
 // button show avilable code ends 
     
   //***********************************************
-     // Add this RIGHT AFTER your jButton3ActionPerformed method ends
+     
 private void timeSelectedActionPerformed(java.awt.event.ActionEvent evt) {
     String restaurant = jComboBox1.getSelectedItem().toString();
     String day = jComboBox2.getSelectedItem().toString();
@@ -276,13 +280,14 @@ private void timeSelectedActionPerformed(java.awt.event.ActionEvent evt) {
 }
     ////************************
 
-    System.out.println("Sending: RESERVE " + restaurant + " " + tableNum + " " + day + " " + time);
+       // Include username in the reservation command
+    System.out.println("Sending: RESERVE " + username + " " + restaurant + " " + tableNum + " " + day + " " + time);
     if ("No available times".equals(time)) {
         JOptionPane.showMessageDialog(this, "Please choose a valid time.");
         return;
     }
 
-    client.sendMessage("RESERVE " + restaurant +  " " +tableNum + " "+ day + " " + time);
+    client.sendMessage("RESERVE "+username+" "+ restaurant +  " " +tableNum + " "+ day + " " + time);
 
     new Thread(() -> {
         String response = client.readMessage(); 
@@ -292,8 +297,9 @@ private void timeSelectedActionPerformed(java.awt.event.ActionEvent evt) {
             } else {
                 JOptionPane.showMessageDialog(this, "Reservation completed!");
             }
-            MainMenu menu = new MainMenu();
-            menu.setVisible(true);
+            // Return to MyAccount instead of MainMenu
+            Myaccount myAccount = new Myaccount(username);
+            myAccount.setVisible(true);
             this.dispose();
         });
     }).start();
@@ -352,7 +358,7 @@ String restaurant = jComboBox1.getSelectedItem().toString();
         //</editor-fold>
         
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MakeNewReservation().setVisible(true));
+    java.awt.EventQueue.invokeLater(() -> new MakeNewReservation("testUser").setVisible(true));
     }
 
     
