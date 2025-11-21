@@ -4,7 +4,7 @@
  *
 */
 
-package com.mycompany.newserver;
+package com.mycompany.phase1;
 /**
  *
  * @author Sss43
@@ -39,17 +39,25 @@ public class Client {
         }
     }
 
-    // اختيارية للحساب
+  
     public void register(String username, String password) {
-        if (out != null) {
+        if (out != null) { //send to new client
             out.println(username);
             out.println(password);
             
             System.out.println("Sent to server: Regestration info " + username + " " + password);
         }
     }
+    //$$$$$$$$$$$
+    public boolean login(String username, String password) {
+    if (out != null) {
+        out.println("LOGIN " + username + " " + password);
+        String response = readMessage();
+        return "LOGIN_SUCCESS".equals(response);
+    }
+    return false;
+}
 
-    // ✅ الدوال اللازمة للجيو
     public void sendMessage(String msg) {
         if (out != null) out.println(msg);
     }
@@ -71,7 +79,7 @@ public class Client {
                 lines.add(line);
             }
         } catch (IOException e) {
-            // تجاهل أو اطبعي رسالة
+          
         }
         return lines;
     }
