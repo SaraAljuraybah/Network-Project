@@ -1,8 +1,8 @@
 
-package GUI;
-
+//package GUI;
+package com.mycompany.phase1;
 import javax.swing.JOptionPane;
-import com.mycompany.mavenproject3.Client;
+import com.mycompany.phase1.Client;
 
 
 public class Registration extends javax.swing.JFrame {

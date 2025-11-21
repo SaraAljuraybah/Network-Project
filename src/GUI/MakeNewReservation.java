@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+//package GUI;
+package com.mycompany.phase1;
+
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
-import com.mycompany.mavenproject3.Client;
+import com.mycompany.phase1.Client;
 
 public class MakeNewReservation extends javax.swing.JFrame {
 

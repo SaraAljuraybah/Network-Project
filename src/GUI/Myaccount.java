@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
-import com.mycompany.mavenproject3.Client;
+//package GUI;
+package com.mycompany.phase1;
+import com.mycompany.phase1.Client;
 
 
 /**

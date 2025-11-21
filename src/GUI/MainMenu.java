@@ -1,7 +1,6 @@
 
-package GUI;
-import GUI.Registration;
-import com.mycompany.newserver.Client;
+package com.mycompany.phase1;
+import com.mycompany.phase1.Registration;
 
 
 public class MainMenu extends javax.swing.JFrame {
@@ -88,9 +87,9 @@ this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-Registration reg = new Registration(); 
+Registration reg = new Registration(client);
 reg.setVisible(true); 
-this.dispose();      // TODO add your handling code here:    // TODO add your handling code here:
+this.dispose();      // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

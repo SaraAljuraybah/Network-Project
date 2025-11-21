@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+
+package com.mycompany.phase1;
 import javax.swing.JOptionPane;
 
 /**
@@ -97,10 +98,32 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-JOptionPane.showMessageDialog(this,
-    "You are connected and logged in successfully",
-    "Login",
-    JOptionPane.INFORMATION_MESSAGE);
+///$$$$$$$$$$$$$$$$$4
+    String username = jTextField1.getText();
+    String password = new String(jPasswordField1.getPassword());
+    
+    // ✅ CREATE CLIENT AND VALIDATE LOGIN
+    Client client = new Client();
+    
+    if (client.login(username, password)) {
+        JOptionPane.showMessageDialog(this,
+            "You are connected and logged in successfully",
+            "Login",
+            JOptionPane.INFORMATION_MESSAGE);
+        //username added to pass the current logged in user to my acc frame
+        Myaccount myAccFrame = new Myaccount(username);
+        myAccFrame.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this,
+            "No user with this name/password exists. Please register as a new user.",
+            "Login Failed",
+            JOptionPane.ERROR_MESSAGE);
+         MainMenu mainMenu = new MainMenu();
+        mainMenu.setVisible(true);
+        this.dispose();
+    }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
