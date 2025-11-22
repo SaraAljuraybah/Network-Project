@@ -4,7 +4,7 @@
  *
 */
 
-package com.mycompany.phase1;
+package com.mycompany.newserver;
 /**
  *
  * @author Sss43

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.phase1;
+package com.mycompany.newserver;
 
 /**
  *
@@ -128,8 +128,25 @@ else if (command.equalsIgnoreCase("GET_MY_RESERVATIONS"))     {
     String username=data[1];
     handelGetMyResrvation(username);
 }
-            
-          
+//----------------------------------------------
+ else if (command.equalsIgnoreCase("CANCEL")) {
+    // CANCEL username restaurant table day time
+    if (data.length < 6) {
+        out.println("Invalid cancel command. Usage: CANCEL <username> <restaurant> <table> <day> <time>");
+        continue;
+    }
+
+    String username = data[1];
+    String restaurantName = data[2];
+    String tableNum = data[3];
+    String day = data[4];
+    String time = data[5];
+
+    handleCancel(username, restaurantName, tableNum, day, time);
+}
+           
+ //----------------------------------------------
+         
 else {
     out.println("Unknown command: " + command);
 }
@@ -252,6 +269,58 @@ private void handleRegister(String username, String password) {
         }
         out.println("END");   
     }
+    
+    
+    
+    
+    //----------------------------------------
+    private void handleCancel(String username, String restaurantName, String tableNum, String day, String time) {
+    boolean tableFound = false;
+    boolean reservationFound = false;
+
+    // 1) نفك حجز الطاولة في مصفوفة المطاعم
+    for (int i = 0; i < allResturants.length; i++) {
+        Resturant r = allResturants[i];
+        if (r.name.equalsIgnoreCase(restaurantName)) {
+            for (int j = 0; j < r.tables.size(); j++) {
+                table t = r.tables.get(j);
+                if (t.tableNum.equals(tableNum)
+                        && t.day.equalsIgnoreCase(day)
+                        && t.time.equals(time)) {
+
+                    if (t.reserved) {
+                        t.cancel();        // reserved = false
+                        tableFound = true;
+                    }
+                }
+            }
+        }
+    }
+
+    // 2) نحذف الحجز من قائمة reservations
+    for (int i = 0; i < reservations.size(); i++) {
+        Reservation res = reservations.get(i);
+        if (res.Username.equals(username)
+                && res.ResturnatName.equalsIgnoreCase(restaurantName)
+                && res.tableNo.equals(tableNum)
+                && res.day.equalsIgnoreCase(day)
+                && res.time.equals(time)) {
+
+            reservations.remove(i);
+            reservationFound = true;
+            break;
+        }
+    }
+
+    if (tableFound && reservationFound) {
+        out.println("Reservation canceled successfully.");
+    } else if (reservationFound) {
+        out.println("Reservation removed, but table was already free.");
+    } else {
+        out.println("Reservation not found.");
+    }
+}
+//------------------------------------
 
 }  
     
