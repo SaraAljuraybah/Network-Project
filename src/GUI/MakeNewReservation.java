@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 //package GUI;
-package com.mycompany.phase1;
+package GUI;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
-import com.mycompany.phase1.Client;
+import com.mycompany.newserver.Client;
 
 public class MakeNewReservation extends javax.swing.JFrame {
 

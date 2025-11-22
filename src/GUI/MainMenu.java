@@ -1,6 +1,7 @@
 
-package com.mycompany.phase1;
-import com.mycompany.phase1.Registration;
+package GUI;
+import com.mycompany.newserver.Client;
+import GUI.Registration;
 
 
 public class MainMenu extends javax.swing.JFrame {

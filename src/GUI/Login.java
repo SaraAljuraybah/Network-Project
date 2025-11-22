@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-package com.mycompany.phase1;
+package GUI;
+import com.mycompany.newserver.Client;
 import javax.swing.JOptionPane;
 
 /**

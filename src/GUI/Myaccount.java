@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 //package GUI;
-package com.mycompany.phase1;
-import com.mycompany.phase1.Client;
+package GUI;
+import com.mycompany.newserver.Client;
 
 
 /**
@@ -154,8 +154,57 @@ public class Myaccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    // نتأكد فيه اختيار
+    String selected = jList1.getSelectedValue();
+    if (selected == null || selected.startsWith("No reservations")) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Please select a reservation to cancel.",
+                "Cancel",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // مثال النص:
+    // Resturant:R1,Day: Sunday,Time: 4-6, Table :1
+
+    try {
+        String restaurant = selected.substring(
+                selected.indexOf("Resturant:") + "Resturant:".length(),
+                selected.indexOf(",Day:")).trim();
+
+        String day = selected.substring(
+                selected.indexOf("Day:") + "Day:".length(),
+                selected.indexOf(",Time:")).trim();
+
+        String time = selected.substring(
+                selected.indexOf("Time:") + "Time:".length(),
+                selected.indexOf(", Table")).trim();
+
+        String tableNo = selected.substring(
+                selected.indexOf("Table :") + "Table :".length()
+        ).trim();
+
+        // نرسل أمر CANCEL للسيرفر
+        Client client = new Client();
+        client.sendMessage("CANCEL " + currentUsername + " " + restaurant + " " + tableNo + " " + day + " " + time);
+        String response = client.readMessage();
+        client.close();
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                response,
+                "Cancel Reservation",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        // نعيد تحميل الحجوزات بعد الحذف
+        loadUserReservations();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Error while parsing selected reservation.",
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
 MakeNewReservation newRes = new MakeNewReservation(currentUsername);//pass the username
